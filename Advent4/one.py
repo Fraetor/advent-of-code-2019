@@ -13,5 +13,32 @@ Other than the range rule, the following are true:
     Input: 273025-767253
 """
 
-import numpy as np
+all_possible = [str(number) for number in range(273025, 767253)]
+# all_possible = ["111111", "223456", "123789"]
+possible = []
 
+for number in all_possible:
+    valid_increasing = [False, False, False, False, False]
+    valid_double = [False, False, False, False, False]
+
+    for i in range(5):
+        if number[i] <= number[i+1]:
+            valid_increasing[i] = True
+
+    if all(valid_increasing):
+        for i in range(5):
+            if number[i] == number[i+1]:
+                if i ==1 or i == 2 or i == 3:
+                    if number[i] != number[i+2] and number[i] != number[i-1]:
+                        valid_double[i] = True
+                elif i == 4:
+                    if number[i] != number[i-1]:
+                        valid_double[i] = True
+                elif i == 0:
+                    if number[i] != number[i+2]:
+                        valid_double[i] = True
+
+    if any(valid_double):
+        possible.append(number)
+
+print("The number of valid passwords is {}.".format(len(possible)))
