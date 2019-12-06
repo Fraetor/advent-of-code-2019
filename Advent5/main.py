@@ -2,6 +2,17 @@ input_file = open("input", "r")
 default_memory = [int(i) for i in input_file.read().split(",")]
 input_file.close()
 
+#  Test cases
+test1 = [3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8]  # Output 1 if input == 8, 0 if not.
+test2 = [3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8]  # Output 1 if input < 8, 0 if not.
+test3 = [3, 3, 1108, -1, 8, 3, 4, 3, 99]  # Output 1 if input == 8, 0 if not.
+test4 = [3, 3, 1107, -1, 8, 3, 4, 3, 99]  # Output 1 if input < 8, 0 if not.
+test5 = [3, 12, 6, 12, 15, 1, 13, 14, 13, 4, 13, 99, -1, 0, 1, 9]  # Output 0 if the input was zero or 1 if not.
+test6 = [3, 3, 1105, -1, 9, 1101, 0, 0, 12, 4, 12, 99, 1]  # Output 0 if the input was zero or 1 if not.
+test7 = [3, 21, 1008, 21, 8, 20, 1005, 20, 22, 107, 8, 21, 20, 1006, 20, 31,  # Output 999 if input < 8
+         1106, 0, 36, 98, 0, 0, 1002, 21, 125, 20, 4, 20, 1105, 1, 46, 104,  # Output 1000 if input == 8
+         999, 1105, 1, 46, 1101, 1000, 1, 20, 4, 20, 1105, 1, 46, 98, 99]  # Output 1001 if input > 8
+
 
 def mode_handler(mode, digit, value):
     try:
@@ -94,10 +105,10 @@ def interpreter():
                 pointer = pointer_jmp
         elif str(memory[pointer])[-2:] == "07" or str(memory[pointer])[-2:] == "7":
             opcode7(memory[pointer + 1], memory[pointer + 2], memory[pointer + 3], str(memory[pointer])[:-2])
-            pointer += 2
+            pointer += 4
         elif str(memory[pointer])[-2:] == "08" or str(memory[pointer])[-2:] == "8":
             opcode8(memory[pointer + 1], memory[pointer + 2], memory[pointer + 3], str(memory[pointer])[:-2])
-            pointer += 2
+            pointer += 4
         elif str(memory[pointer])[-2:] == "99":
             opcode99()
             break
