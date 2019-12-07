@@ -1,6 +1,5 @@
 input_file = open("input", "r")
 orbit_data = [[orbiter.rstrip("\n") for orbiter in line.split(")")] for line in input_file.readlines()]
-# print(orbit_data)
 
 
 def num_orbits(current_orbit):
@@ -17,8 +16,24 @@ def search_suborbit(target):
             return suborbit
 
 
+def transfers_to_com(current_orbit):
+    com_transfers = ["COM"]
+    while current_orbit[0] != "COM":
+        com_transfers.append(current_orbit[0])
+        current_orbit = search_suborbit(current_orbit[0])
+    return com_transfers
+
+
 total = 0
 for orbit in orbit_data:
     total += num_orbits(orbit)
 
 print("The total number of direct and indirect orbits is: {}".format(total))
+
+you_transfers = transfers_to_com(search_suborbit("YOU"))
+santa_transfers = transfers_to_com(search_suborbit("SAN"))
+
+transfer_bodies = [you for you in you_transfers if you not in santa_transfers] +\
+                  [santa for santa in santa_transfers if santa not in you_transfers]
+
+print("The number of orbital transfers for you to reach Santa is: {}".format(len(transfer_bodies)))
